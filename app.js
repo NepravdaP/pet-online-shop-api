@@ -1,10 +1,26 @@
-// import mongoose from "mongoose";
-const mongoose = require("mongoose");
-const express = require("express");
+import mongoose from "mongoose";
+// const mongoose = require("mongoose");
+import express from "express";
+// const express = require("express");
+import cors from "cors";
+import bodyParser from "body-parser";
+import productsRouter from "./routes/products.router.js";
+import searchRouter from "./routes/search.router.js";
 const app = express();
 
-app.use("/api/products/all", require("./routes/products.routes"));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded());
+// app.use(express.json());
 
+app.use(cors());
+app.options("*", cors());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/products", productsRouter);
+app.use("/api", searchRouter);
 const start = async () => {
   try {
     app.listen(5000, () => {
