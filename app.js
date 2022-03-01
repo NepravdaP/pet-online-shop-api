@@ -4,6 +4,7 @@ import express from "express";
 // const express = require("express");
 import cors from "cors";
 import bodyParser from "body-parser";
+import authRouter from "./routes/auth.router.js";
 import productsRouter from "./routes/products.router.js";
 import searchRouter from "./routes/search.router.js";
 const app = express();
@@ -18,7 +19,7 @@ app.options("*", cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.urlencoded({ extended: true }));
-
+app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api", searchRouter);
 const start = async () => {
